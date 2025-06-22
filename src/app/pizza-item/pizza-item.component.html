@@ -1,0 +1,45 @@
+<!-- pizza-item.component.html -->
+<div class="pizza-item" [class.expanded]="state.expanded">
+  <div class="item-header" (click)="toggleExpand.emit(itemId)">
+  <h3>{{ name }}</h3>
+  <span class="toggle-icon">{{ state.expanded ? '−' : '+' }}</span>
+  </div>
+   @if (state.expanded) {
+  <div class="item-content">
+  <div class="size-price-grid">
+  <div class="grid-header">Size</div>
+  <div class="grid-header">Price</div>
+       @for (size of sizes; track size.sizeId) {
+  <div class="size-cell">
+  <input
+           type="checkbox"
+           [id]="'size-' + itemId + '-' + size.sizeId"
+           [checked]="isSizeEnabled(size.sizeId)"
+           (change)="onCheckboxChange(size.sizeId, $event)"
+  >
+  <label [for]="'size-' + itemId + '-' + size.sizeId">{{ size.name }}</label>
+  </div>
+  <div class="price-cell">
+  <input
+           type="number"
+           [value]="getPriceForSize(size.sizeId)"
+           [disabled]="!isSizeEnabled(size.sizeId)"
+           (change)="onPriceChange(size.sizeId, $event)"
+           min="0"
+           step="0.01"
+  >
+  </div>
+       }
+  </div>
+     @if (state.hasChanges) {
+  <button
+       class="undo-button"
+       (click)="onUndo()"
+       [attr.aria-label]="'Undo changes for ' + name"
+  >
+       Undo
+  </button>
+     }
+  </div>
+   }
+  </div>

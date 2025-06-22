@@ -1,0 +1,15 @@
+<div class="app-container">
+  <h1>Pizza</h1>
+  <div class="pizza-menu">
+  <app-pizza-item
+       *ngFor="let item of items"
+       [name]="item.name"
+       [itemId]="item.itemId"
+       [sizes]="sizes"
+       [state]="itemsState[item.itemId]"
+       (toggleExpand)="toggleExpand($event)"
+       (priceChange)="onPriceChange($event.itemId, $event.sizeId, $event.price)"
+       (undoChanges)="onUndoChanges($event)"
+  ></app-pizza-item>
+  </div>
+  </div>
